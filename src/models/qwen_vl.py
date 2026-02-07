@@ -3,7 +3,12 @@ from __future__ import annotations
 from typing import Any, Optional
 
 import torch
-from transformers import AutoModelForVision2Seq, AutoProcessor
+from transformers import AutoProcessor
+
+try:
+    from transformers import AutoModelForImageTextToText as _AutoModel
+except Exception:  # pragma: no cover
+    from transformers import AutoModelForVision2Seq as _AutoModel
 
 try:
     from qwen_vl_utils import process_vision_info
@@ -28,7 +33,7 @@ class QwenVL:
         self.max_new_tokens = max_new_tokens
 
         self.processor = AutoProcessor.from_pretrained(model_name, trust_remote_code=True)
-        self.model = AutoModelForVision2Seq.from_pretrained(
+        self.model = _AutoModel.from_pretrained(
             model_name, trust_remote_code=True, device_map="auto"
         )
 
