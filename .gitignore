@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.DS_Store
+
+data/real/
+data/synth/
+data/qa/
+reports/
+
+*.log
+*.tmp
+*.cache
+
+notebooks/.ipynb_checkpoints/

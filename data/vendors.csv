@@ -1,0 +1,4 @@
+# Placeholder vendor DB
+vendor_id,vendor_name,gst_number
+1,Example Vendor,GST123456
+2,Another Vendor,GST654321

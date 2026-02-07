@@ -1,0 +1,6 @@
+torch
+transformers>=4.45
+accelerate>=0.33
+qwen-vl-utils>=0.0.10
+paddleocr>=2.7.0
+paddlepaddle
