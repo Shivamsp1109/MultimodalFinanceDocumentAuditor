@@ -2,15 +2,41 @@ from __future__ import annotations
 
 import ast
 import json
-from typing import Any
+from typing import Any, Optional
+
+
+def _first_balanced_object(text: str) -> Optional[str]:
+    start = text.find("{")
+    if start == -1:
+        return None
+    depth = 0
+    in_string = False
+    escape = False
+    for i in range(start, len(text)):
+        ch = text[i]
+        if in_string:
+            if escape:
+                escape = False
+            elif ch == "\\":
+                escape = True
+            elif ch == '"':
+                in_string = False
+            continue
+        if ch == '"':
+            in_string = True
+        elif ch == "{":
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth == 0:
+                return text[start : i + 1]
+    return None
 
 
 def extract_json_block(text: str) -> dict[str, Any]:
-    start = text.find("{")
-    end = text.rfind("}")
-    if start == -1 or end == -1 or end <= start:
+    block = _first_balanced_object(text)
+    if not block:
         raise ValueError("No JSON object found in model output.")
-    block = text[start : end + 1]
     try:
         return json.loads(block)
     except json.JSONDecodeError:

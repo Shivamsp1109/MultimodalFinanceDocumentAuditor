@@ -39,7 +39,7 @@ class Auditor:
         vlm_risk = None
         if self.vlm is not None:
             vlm_risk = self.vlm.analyze(
-                image_path=image_path, extracted_json=invoice.__dict__, flags=flags.__dict__
+                image_path=image_path, extracted_json=asdict(invoice), flags=flags.__dict__
             )
         compliance = self.compliance.evaluate(
             invoice, policy=policy, vendor_db=vendor_db, flags=flags
